@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{17010ede-c81a-45d0-a0ab-a5809ead0114}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	sum			: LREAL;
+	args		: ARRAY [1..4] OF T_Arg;
+	a			: INT := 4567;
+	b			: REAL := 3.1415;
+	c			: DINT := 7032345;
+	d			: USINT := 13;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[args[1] := F_INT(a);
+args[2] := F_REAL(b);
+args[3] := F_DINT(c);
+args[4] := F_USINT(d);
+sum := F_AddMulti(args);
+
+sum := F_AddAny(a, b) + F_AddAny(c, d);
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

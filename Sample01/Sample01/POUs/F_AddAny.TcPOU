@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="F_AddAny" Id="{0e4646e1-0697-4188-9d32-56bcabb9e7d2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_AddAny : LREAL
+VAR_INPUT
+	a			:	ANY;
+	b			:	ANY;
+END_VAR
+VAR
+	aUSINT		:	USINT;
+	aUINT		:	UINT;
+	aINT		:	INT;
+	aDINT		:	DINT;
+	aREAL		:	REAL;
+	aLREAL		:	LREAL;
+
+	bUSINT		:	USINT;
+	bUINT		:	UINT;
+	bINT		:	INT;
+	bDINT		:	DINT;
+	bREAL		:	REAL;
+	bLREAL		:	LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE (a.TypeClass) OF
+	__SYSTEM.TYPE_CLASS.TYPE_USINT:
+		MEMCPY(ADR(aUSINT), a.pValue, TO_UDINT(a.diSize));
+		F_AddAny := aUSINT;
+	__SYSTEM.TYPE_CLASS.TYPE_UINT:
+		MEMCPY(ADR(aUINT), a.pValue, TO_UDINT(a.diSize));
+		F_AddAny := aUINT;
+	__SYSTEM.TYPE_CLASS.TYPE_INT:
+		MEMCPY(ADR(aINT), a.pValue, TO_UDINT(a.diSize));
+		F_AddAny := aINT;
+	__SYSTEM.TYPE_CLASS.TYPE_DINT:
+		MEMCPY(ADR(aDINT), a.pValue, TO_UDINT(a.diSize));
+		F_AddAny := aDINT;
+	__SYSTEM.TYPE_CLASS.TYPE_REAL:
+		MEMCPY(ADR(aREAL), a.pValue, TO_UDINT(a.diSize));
+		F_AddAny := aREAL;
+	__SYSTEM.TYPE_CLASS.TYPE_LREAL:
+		MEMCPY(ADR(aLREAL), a.pValue, TO_UDINT(a.diSize));
+		F_AddAny := aLREAL;
+END_CASE
+
+CASE (b.TypeClass) OF
+	__SYSTEM.TYPE_CLASS.TYPE_USINT:
+		MEMCPY(ADR(bUSINT), b.pValue, TO_UDINT(b.diSize));
+		F_AddAny := F_AddAny + bUSINT;
+	__SYSTEM.TYPE_CLASS.TYPE_UINT:
+		MEMCPY(ADR(bUINT), b.pValue, TO_UDINT(b.diSize));
+		F_AddAny := F_AddAny + bUINT;
+	__SYSTEM.TYPE_CLASS.TYPE_INT:
+		MEMCPY(ADR(bINT), b.pValue, TO_UDINT(b.diSize));
+		F_AddAny := F_AddAny + bINT;
+	__SYSTEM.TYPE_CLASS.TYPE_DINT:
+		MEMCPY(ADR(bDINT), b.pValue, TO_UDINT(b.diSize));
+		F_AddAny := F_AddAny + bDINT;
+	__SYSTEM.TYPE_CLASS.TYPE_REAL:
+		MEMCPY(ADR(bREAL), b.pValue, TO_UDINT(b.diSize));
+		F_AddAny := F_AddAny + bREAL;
+	__SYSTEM.TYPE_CLASS.TYPE_LREAL:
+		MEMCPY(ADR(bLREAL), b.pValue, TO_UDINT(b.diSize));
+		F_AddAny := F_AddAny + bLREAL;
+END_CASE
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

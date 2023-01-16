@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="F_AddMulti" Id="{539d7872-ff2e-4bb8-bf2f-3d842a18d2a7}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION F_AddMulti : LREAL
+VAR_IN_OUT
+	aArgs		:	ARRAY [*] OF T_Arg;
+END_VAR
+VAR
+	nIndex		:	DINT;
+	aUSINT		:	USINT;
+	aUINT		:	UINT;
+	aINT		:	INT;
+	aDINT		:	DINT;
+	aREAL		:	REAL;
+	aLREAL		:	LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[F_AddMulti := 0.0;
+FOR nIndex := LOWER_BOUND(aArgs, 1) TO UPPER_BOUND(aArgs, 1) DO
+	CASE (aArgs[nIndex].eType) OF
+		E_ArgType.ARGTYPE_USINT:
+			MEMCPY(ADR(aUSINT), aArgs[nIndex].pData, aArgs[nIndex].cbLen);
+			F_AddMulti := F_AddMulti + aUSINT;
+		E_ArgType.ARGTYPE_UINT:
+			MEMCPY(ADR(aUINT), aArgs[nIndex].pData, aArgs[nIndex].cbLen);
+			F_AddMulti := F_AddMulti + aUINT;
+		E_ArgType.ARGTYPE_INT:
+			MEMCPY(ADR(aINT), aArgs[nIndex].pData, aArgs[nIndex].cbLen);
+			F_AddMulti := F_AddMulti + aINT;
+		E_ArgType.ARGTYPE_DINT:
+			MEMCPY(ADR(aDINT), aArgs[nIndex].pData, aArgs[nIndex].cbLen);
+			F_AddMulti := F_AddMulti + aDINT;
+		E_ArgType.ARGTYPE_REAL:
+			MEMCPY(ADR(aREAL), aArgs[nIndex].pData, aArgs[nIndex].cbLen);
+			F_AddMulti := F_AddMulti + aREAL;
+		E_ArgType.ARGTYPE_LREAL:
+			MEMCPY(ADR(aLREAL), aArgs[nIndex].pData, aArgs[nIndex].cbLen);
+			F_AddMulti := F_AddMulti + aLREAL;
+	END_CASE
+END_FOR
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
